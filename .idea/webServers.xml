@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="33098ec7-227f-4f8e-a924-91ea5d6caffb" name="ssh-cookitup.alwaysdata.net">
+        <fileTransfer rootFolder="/home/cookitup/www/symfony" accessType="SFTP" host="ssh-cookitup.alwaysdata.net" port="22" sshConfigId="9585f960-fd93-4755-988e-03969a673bbb" sshConfig="cookitup@ssh-cookitup.alwaysdata.net:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
