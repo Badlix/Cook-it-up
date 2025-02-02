@@ -15,6 +15,8 @@ class UserChecker implements UserCheckerInterface
             return;
         }
 
+        dd($user);
+
         if (!$user->isVerified()) {
             throw new CustomUserMessageAccountStatusException('Votre compte n\'a pas encore été vérifié.');
         }
