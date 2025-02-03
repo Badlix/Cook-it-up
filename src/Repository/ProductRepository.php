@@ -23,7 +23,7 @@ class ProductRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('product')
             ->orderBy('product.id', 'ASC')
-            ->setMaxResults(10)
+            ->setMaxResults(15)
             ->getQuery()
             ->getResult()
         ;
@@ -43,6 +43,16 @@ class ProductRepository extends ServiceEntityRepository
         $this->flush();
 
         return $product->getId();
+    }
+
+    public function findByName($name): ?Product
+    {
+        return $this->createQueryBuilder('product')
+            ->andWhere('product.name = :val')
+            ->setParameter('val', $name)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
     }
 
 }

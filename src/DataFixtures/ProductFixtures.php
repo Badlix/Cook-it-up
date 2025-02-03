@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Product;
+use App\Entity\Recipe;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -13,6 +14,7 @@ class ProductFixtures extends Fixture implements FixtureGroupInterface
     // symfony console doctrine:fixtures:load --group=resetData
     public function load(ObjectManager $manager): void
     {
+        // PRODUCTS
         $products = [];
         $products[] = (new Product())->setName("Tomate")->setDescription("Tomate fraîche, idéale pour les salades ou les sauces.")->setPrice(1)->setQuantity(1);
         $products[] = (new Product())->setName("Pomme")->setDescription("Pomme croquante et sucrée, parfaite pour un goûter ou une tarte.")->setPrice(2)->setQuantity(10);
@@ -28,6 +30,48 @@ class ProductFixtures extends Fixture implements FixtureGroupInterface
         foreach ($products as $product) {
             $manager->persist($product);
         }
+        $manager->flush();
+
+        // RECIPES
+        $recipes = [];
+        $productRepository = $manager->getRepository(Product::class);
+
+        $recipes[] = (new Recipe())
+            ->setName("Salade de tomates et concombre")
+            ->addIngredient($productRepository->findByName('Tomate'))
+            ->addIngredient($productRepository->findByName('Concombre'))
+            ->addIngredient($productRepository->findByName('Salade'))
+            ->setDuration(15);
+
+        $recipes[] = (new Recipe())
+            ->setName("Purée de pommes de terre")
+            ->addIngredient($productRepository->findByName('Pomme de Terre'))
+            ->addIngredient($productRepository->findByName('Carotte'))
+            ->setDuration(30);
+
+        $recipes[] = (new Recipe())
+            ->setName("Banane et fraises fraîches")
+            ->addIngredient($productRepository->findByName('Banane'))
+            ->addIngredient($productRepository->findByName('Fraise'))
+            ->setDuration(5);
+
+        $recipes[] = (new Recipe())
+            ->setName("Soupe de carottes et pommes de terre")
+            ->addIngredient($productRepository->findByName('Pomme de Terre'))
+            ->addIngredient($productRepository->findByName('Carotte'))
+            ->setDuration(40);
+
+        $recipes[] = (new Recipe())
+            ->setName("Tartines à la tomate et au concombre")
+            ->addIngredient($productRepository->findByName('Tomate'))
+            ->addIngredient($productRepository->findByName('Concombre'))
+            ->addIngredient($productRepository->findByName('Salade'))
+            ->setDuration(10);
+
+        foreach ($recipes as $recipe) {
+            $manager->persist($recipe);
+        }
+
         $manager->flush();
     }
 
