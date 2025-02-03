@@ -16,28 +16,43 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
-    //    /**
-    //     * @return Product[] Returns an array of Product objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('p.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    /**
+     * @return Product[] Returns an array of Product objects
+     */
+    public function getAllProducts(): array
+    {
+        return $this->createQueryBuilder('product')
+            ->orderBy('product.id', 'ASC')
+            ->setMaxResults(15)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
-    //    public function findOneBySomeField($value): ?Product
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    /**
+     * @return int Return the Id of the new Product
+     */
+    public function addProduct($name, $description, $price, $quantity): int {
+        $product = new Product();
+        $product->setName($name);
+        $product->setDescription($description);
+        $product->setPrice($price);
+        $product->setPrice($quantity);
+
+        $this->persist($product);
+        $this->flush();
+
+        return $product->getId();
+    }
+
+    public function findByName($name): ?Product
+    {
+        return $this->createQueryBuilder('product')
+            ->andWhere('product.name = :val')
+            ->setParameter('val', $name)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
 }
