@@ -93,6 +93,28 @@
             return ul;
         }
 
+        function saveRecipe(data){
+
+
+            let dataToSend = {
+                title: data.title,
+                ingredients: data.ingredients,
+                duration: Math.random() * 100,
+            }
+
+            fetch("/createRecipe", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(dataToSend)
+            })
+                .then(data => {})
+            .catch(error => {
+                console.error("Error:", error);
+            });
+        }
+
         document.addEventListener("DOMContentLoaded", function() {
             let mainDiv = document.getElementById("recipe-main");
             let recipeLoader = document.getElementById("recipe-loader");
@@ -127,6 +149,8 @@
                     recipeLoader.classList.add("hidden")
                     recipeLoader.classList.remove("flex")
                     mainDiv.classList.remove("hidden")
+
+                    // saveRecipe(data) en cours de dev
                 })
                 .catch(error => {
                     console.error("Error:", error);
