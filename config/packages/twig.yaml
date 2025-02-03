@@ -2,6 +2,10 @@ twig:
     file_name_pattern: '*.twig'
     form_themes: ['form_table_layout.html.twig']
 
+
+framework:
+    error_controller: 'App\Controller\CustomErrorController::show'
+
 when@test:
     twig:
         strict_variables: true
