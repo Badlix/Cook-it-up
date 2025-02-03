@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create new Product!{% endblock %}
+
+{% block body %}
+    {% for product in products %}
+        {{ product.name }}
+    {% endfor %}
+{% endblock %}
