@@ -31,10 +31,8 @@
                                     </svg>
                                 </div>
                                 <input
-                                        placeholder="Enter ingredients"
-                                        class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#111418] focus:outline-0 focus:ring-0 border border-[#dce0e5] bg-white focus:border-[#dce0e5] h-full placeholder:text-[#637588] px-[15px] rounded-r-none border-r-0 pr-2 rounded-l-none border-l-0 pl-2 text-sm font-normal leading-normal @[480px]:text-base @[480px]:font-normal @[480px]:leading-normal"
-                                        value=""
                                         id="ingredientsInput"
+                                        class="form-input flex w-full min-w-0 flex-1 resize-none rounded-xl text-[#111418] focus:outline-0 focus:ring-0 border border-[#dce0e5] bg-white focus:border-[#dce0e5] h-full placeholder:text-[#637588] px-[15px] rounded-r-none border-r-0 pr-2 rounded-l-none border-l-0 pl-2 text-sm font-normal leading-normal @[480px]:text-base @[480px]:font-normal @[480px]:leading-normal"
                                 />
                                 <div class="flex items-center justify-center rounded-r-xl border-l-0 border border-[#dce0e5] bg-white pr-[7px]">
                                     <button
@@ -94,8 +92,6 @@
         }
 
         function saveRecipe(data){
-
-
             let dataToSend = {
                 title: data.title,
                 ingredients: data.ingredients,
@@ -115,7 +111,37 @@
             });
         }
 
-        document.addEventListener("DOMContentLoaded", function() {
+        async function getIngredientsList() {
+            try {
+                const response = await fetch("/ingredients", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                });
+                let ingredientList = []
+                for (const ingredient of await response.json()) {
+                    ingredientList.push({value: ingredient, text: ingredient})
+                }
+                return ingredientList;
+            } catch (error) {
+                console.error("Error:", error);
+                return [];
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", async function () {
+            new TomSelect('#ingredientsInput', {
+                options: await getIngredientsList(),
+                plugins: {
+                    remove_button: {
+                        title: "Supprimer l'ingrédient",
+                    }
+                },
+                persist: false,
+                create: true,
+            });
+
             let mainDiv = document.getElementById("recipe-main");
             let recipeLoader = document.getElementById("recipe-loader");
             let title = document.getElementById("recipe-title");
@@ -123,7 +149,7 @@
             let ingredients = document.getElementById("recipe-ingredients");
             let steps = document.getElementById("recipe-steps");
 
-            document.getElementById("searchButton").addEventListener("click", function() {
+            document.getElementById("searchButton").addEventListener("click", function () {
                 recipeLoader.classList.remove("hidden")
                 recipeLoader.classList.add("flex")
                 let data = {};
@@ -138,25 +164,27 @@
                     },
                     body: dataToSend
                 })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    title.innerHTML = data.title;
-                    desc.innerHTML = data.description;
-                    ingredients.innerHTML = formatIngredients(data.ingredients).innerHTML
-                    steps.innerHTML = formatSteps(data.steps).innerHTML
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        title.innerHTML = data.title;
+                        desc.innerHTML = data.description;
+                        ingredients.innerHTML = formatIngredients(data.ingredients).innerHTML
+                        steps.innerHTML = formatSteps(data.steps).innerHTML
 
-                    recipeLoader.classList.add("hidden")
-                    recipeLoader.classList.remove("flex")
-                    mainDiv.classList.remove("hidden")
+                        recipeLoader.classList.add("hidden")
+                        recipeLoader.classList.remove("flex")
+                        mainDiv.classList.remove("hidden")
 
-                    saveRecipe(data)
-                })
-                .catch(error => {
-                    console.error("Error:", error);
-                });
+                        saveRecipe(data)
+                    })
+                    .catch(error => {
+                        console.error("Error:", error);
+                    });
 
             });
         });
+
+
     </script>
 {% endblock %}

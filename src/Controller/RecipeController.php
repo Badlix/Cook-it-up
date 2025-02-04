@@ -34,8 +34,6 @@ final class RecipeController extends AbstractController
         $recipe->setName($name);
         $recipe->setDuration($duration);
 
-
-
         foreach ($ingredients as $ingredientRecipe) {
 
             $ingredient = $productRepository->findByName($ingredientRecipe['name']);
