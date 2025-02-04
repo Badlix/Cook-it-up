@@ -1,16 +1,32 @@
 {
   "name": "cook-it-up",
   "version": "1.0.0",
-  "description": "",
+  "description": "## Description du projet :",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "parcel assets/js/app.js",
+    "build": "parcel build assets/js/app.js --dist-dir ./public/js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Badlix/Cook-it-up.git"
+    "url": "git+https://github.com/Badlix/Cook-it-up.git"
   },
   "private": true,
   "dependencies": {
+    "vue": "^3.5.13"
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Badlix/Cook-it-up/issues"
+  },
+  "homepage": "https://github.com/Badlix/Cook-it-up#readme",
+  "devDependencies": {
+    "parcel": "^2.13.3"
   }
 }
