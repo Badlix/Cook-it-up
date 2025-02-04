@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Product;
 use App\Entity\Recipe;
-use App\Repository\ProductRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,12 +22,14 @@ final class RecipeController extends AbstractController
     }
 
    #[Route('/createRecipe', name: 'app_create_recipe', methods: ['POST'])]
-    public function createRecipe(Request $request, ProductRepository $productRepository): Response
+    public function createRecipe(Request $request, EntityManagerInterface $productRepository): Response
     {
         $data = json_decode($request->getContent(), true);
         $name = $data['title'];
         $duration = $data['duration'];
         $ingredients = $data['ingredients'];
+
+        var_dump($data);
 
         $recipe = new Recipe();
         $recipe->setName($name);
@@ -40,14 +42,15 @@ final class RecipeController extends AbstractController
             $ingredient->setName($ingredientRecipe['name']);
             $ingredient->setPrice(rand(1,10));
             $ingredient->setDescription("This is a description");
-            $ingredient->setQuantity(1);
+            $ingredient->setQuantity($ingredientRecipe['quantity']);
+            $productRepository->persist($ingredient);
 
             $recipe->addIngredient($ingredient);
         }
 
-    $productRepository->persist($recipe);
-    $productRepository->flush();
+        $productRepository->persist($recipe);
+        $productRepository->flush();
 
-    return $this->redirectToRoute('success', ['productName' => $recipe->getName()]);
+        return $this->redirectToRoute('success', ['productName' => $recipe->getName()]);
     }
 }

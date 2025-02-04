@@ -141,7 +141,7 @@
                 .then(response => response.json())
                 .then(data => {
                     console.log(data);
-                    title.innerHTML = "Recette de " + data.title;
+                    title.innerHTML = data.title;
                     desc.innerHTML = data.description;
                     ingredients.innerHTML = formatIngredients(data.ingredients).innerHTML
                     steps.innerHTML = formatSteps(data.steps).innerHTML
@@ -150,7 +150,7 @@
                     recipeLoader.classList.remove("flex")
                     mainDiv.classList.remove("hidden")
 
-                    // saveRecipe(data) en cours de dev
+                    saveRecipe(data)
                 })
                 .catch(error => {
                     console.error("Error:", error);
