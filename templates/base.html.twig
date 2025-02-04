@@ -8,12 +8,10 @@
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
-
+        {{ encore_entry_script_tags('app') }}
         {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
-    {{ stimulus_controller('react') }}
     <body>
         <div class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden" style='font-family: "Work Sans", "Noto Sans", sans-serif;'>
             <div class="layout-container flex h-full grow flex-col">
