@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Product;
 use App\Entity\Recipe;
 use App\Repository\ProductRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +23,7 @@ final class RecipeController extends AbstractController
     }
 
    #[Route('/createRecipe', name: 'app_create_recipe', methods: ['POST'])]
-    public function createRecipe(Request $request, ProductRepository $productRepository): Response
+    public function createRecipe(Request $request, EntityManagerInterface $manager, ProductRepository $productRepository): Response
     {
         $data = json_decode($request->getContent(), true);
         $name = $data['title'];
@@ -33,21 +34,25 @@ final class RecipeController extends AbstractController
         $recipe->setName($name);
         $recipe->setDuration($duration);
 
-
-
         foreach ($ingredients as $ingredientRecipe) {
-            $ingredient = new Product();
-            $ingredient->setName($ingredientRecipe['name']);
-            $ingredient->setPrice(rand(1,10));
-            $ingredient->setDescription("This is a description");
-            $ingredient->setQuantity(1);
+
+            $ingredient = $productRepository->findByName($ingredientRecipe['name']);
+
+            if ($ingredient == null) {
+                $ingredient = new Product();
+                $ingredient->setName($ingredientRecipe['name']);
+                $ingredient->setPrice(rand(1,10));
+                $ingredient->setDescription("This is a description");
+                $ingredient->setQuantity($ingredientRecipe['quantity']);
+                $manager->persist($ingredient);
+            }
 
             $recipe->addIngredient($ingredient);
         }
 
-    $productRepository->persist($recipe);
-    $productRepository->flush();
+        $manager->persist($recipe);
+        $manager->flush();
 
-    return $this->redirectToRoute('success', ['productName' => $recipe->getName()]);
+        return $this->redirectToRoute('success', ['productName' => $recipe->getName()]);
     }
 }
