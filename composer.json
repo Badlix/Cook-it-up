@@ -7,20 +7,24 @@
         "php": ">=8.2",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "doctrine/dbal": "^3",
-        "doctrine/doctrine-bundle": "^2.13",
-        "doctrine/doctrine-migrations-bundle": "^3.4",
-        "doctrine/orm": "^3.3",
+        "doctrine/dbal": "^3.9.4",
+        "doctrine/doctrine-bundle": "^2.13.2",
+        "doctrine/doctrine-migrations-bundle": "^3.4.1",
+        "doctrine/orm": "^3.3.1",
         "symfony/console": "7.2.*",
         "symfony/dotenv": "7.2.*",
-        "symfony/flex": "^2",
-        "symfony/form": "^7.2",
+        "symfony/flex": "^2.4.7",
+        "symfony/form": "^7.2.3",
         "symfony/framework-bundle": "7.2.*",
         "symfony/runtime": "7.2.*",
+        "symfony/stimulus-bundle": "^2.22",
         "symfony/twig-bundle": "7.2.*",
+        "symfony/ux-react": "^2.22",
+        "symfony/ux-turbo": "^2.22",
+        "symfony/webpack-encore-bundle": "^2.2",
         "symfony/yaml": "7.2.*",
-        "twig/extra-bundle": "^2.12|^3.0",
-        "twig/twig": "^2.12|^3.0"
+        "twig/extra-bundle": "^2.12|^3.19",
+        "twig/twig": "^2.12|^3.19"
     },
     "config": {
         "allow-plugins": {
@@ -74,11 +78,10 @@
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^4.0",
-        "phpunit/phpunit": "^9.5",
+        "phpunit/phpunit": "^9.6.22",
         "symfony/browser-kit": "7.2.*",
-        "symfony/css-selector": "7.2.*",
-        "symfony/maker-bundle": "^1.62",
-        "symfony/panther": "^2.1",
+        "symfony/maker-bundle": "^1.62.1",
+        "symfony/panther": "^2.2",
         "symfony/phpunit-bridge": "^7.2"
     }
 }
