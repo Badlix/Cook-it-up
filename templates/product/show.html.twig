@@ -3,7 +3,12 @@
 {% block title %}Create new Product!{% endblock %}
 
 {% block body %}
+    <h1 class="mb-2 text-lg font-semibold text"> Liste des ingrédients : </h1>
+    <ul class="list-disc list-inside ml-5">
     {% for product in products %}
-        {{ product.name }}
+
+        <li>{{ product.name }}</li>
+
     {% endfor %}
+    </ul>
 {% endblock %}
