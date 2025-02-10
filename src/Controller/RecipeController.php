@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class RecipeController extends AbstractController
 {
@@ -23,8 +24,11 @@ final class RecipeController extends AbstractController
     }
 
    #[Route('/createRecipe', name: 'app_create_recipe', methods: ['POST'])]
+   #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function createRecipe(Request $request, EntityManagerInterface $manager, ProductRepository $productRepository): Response
     {
+        $user = $this->getUser();
+        dd($user);
         $data = json_decode($request->getContent(), true);
         $name = $data['title'];
         $duration = $data['duration'];
