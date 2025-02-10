@@ -3,3 +3,9 @@ add.ingredient: Ajouter un ingrédient
 list.ingredient: Liste des ingrédients
 find.recipes: Trouve des recettes à partir d'ingrédients
 search: Rechercher
+create.ingredient: Ajouter un ingrédient
+name: Nom
+description: Description
+quantity: Quantité
+list:
+  ingredient: Liste des ingrédients
