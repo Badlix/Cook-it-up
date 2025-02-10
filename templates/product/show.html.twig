@@ -3,7 +3,10 @@
 {% block title %}Create new Product!{% endblock %}
 
 {% block body %}
+    <h1> Liste des ingrédients : </h1>
     {% for product in products %}
-        {{ product.name }}
+
+        <li>{{ product.name }}</li>
+
     {% endfor %}
 {% endblock %}
