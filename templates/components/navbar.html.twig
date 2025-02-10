@@ -20,9 +20,11 @@
         </div>
         <div class="flex items-center gap-9">
             <a class="text-[#111418] text-sm font-medium leading-normal" href="#">Home</a>
-            <a class="text-[#111418] text-sm font-medium leading-normal" href="/recipe">Générer une recette</a>
-            <a class="text-[#111418] text-sm font-medium leading-normal" href="/product">Ajouter un ingrédient</a>
-            <a class="text-[#111418] text-sm font-medium leading-normal" href="/products">Liste des ingrédients</a>
+            <a class="text-[#111418] text-sm font-medium leading-normal" href="/recipe">{% trans from 'navbar'%}generate.recipe{% endtrans %}</a>
+            <a class="text-[#111418] text-sm font-medium leading-normal" href="/product">{% trans from 'navbar'%}add.ingredient{% endtrans %}</a>
+            <a class="text-[#111418] text-sm font-medium leading-normal" href="/products">{% trans from 'navbar'%}list.ingredient{% endtrans %}</a>
+            <a href="{{ path('change_locale', {'locale': "fr"}) }}">FR</a>
+            <a href="{{ path('change_locale', {'locale': "en"}) }}">EN</a>
         </div>
     </div>
     <div class="flex flex-1 justify-end gap-8">
@@ -41,7 +43,7 @@
                     </svg>
                 </div>
                 <input
-                        placeholder="Search"
+                        placeholder={% trans from 'navbar'%}search{% endtrans %}
                         class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#111418] focus:outline-0 focus:ring-0 border-none bg-[#f0f2f4] focus:border-none h-full placeholder:text-[#637588] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal"
                         value=""
                 />
