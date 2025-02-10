@@ -22,7 +22,7 @@ class ProductRepository extends ServiceEntityRepository
     public function getAllProducts(): array
     {
         return $this->createQueryBuilder('product')
-            ->orderBy('product.id', 'ASC')
+            ->orderBy('product.name', 'ASC')
             ->setMaxResults(100)
             ->getQuery()
             ->getResult()
