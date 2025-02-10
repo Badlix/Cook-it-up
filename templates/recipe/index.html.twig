@@ -14,7 +14,7 @@
                         <h1
                                 class="text-white text-4xl font-black leading-tight tracking-[-0.033em] @[480px]:text-5xl @[480px]:font-black @[480px]:leading-tight @[480px]:tracking-[-0.033em] text-center"
                         >
-                            Find recipes based on ingredients
+                            {% trans from 'navbar'%}find.recipes{% endtrans %}
                         </h1>
                         <label class="flex flex-col min-w-40 h-14 w-full max-w-[480px] @[480px]:h-16">
                             <div class="flex w-full flex-1 items-stretch rounded-xl h-full">
@@ -40,7 +40,7 @@
                                             data-action="click->recipe#search"
                                             data-recipe-target="searchButton"
                                     >
-                                        <span class="truncate">Search</span>
+                                        <span class="truncate">{% trans from 'navbar'%}search{% endtrans %}</span>
                                     </button>
                                 </div>
                             </div>

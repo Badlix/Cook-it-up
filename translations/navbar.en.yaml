@@ -1,0 +1,5 @@
+generate.recipe: Generate a recipe
+add.ingredient: Add an ingredient
+list.ingredient: Ingredients list
+find.recipes: Find recipes based on ingredients
+search: Search
