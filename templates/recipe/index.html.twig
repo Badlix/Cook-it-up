@@ -31,13 +31,14 @@
                                     </svg>
                                 </div>
                                 <input
-                                        id="ingredientsInput"
+                                        data-recipe-target="ingredientsInput"
                                         class="form-input flex w-full min-w-0 flex-1 resize-none rounded-xl text-[#111418] focus:outline-0 focus:ring-0 border border-[#dce0e5] bg-white focus:border-[#dce0e5] h-full placeholder:text-[#637588] px-[15px] rounded-r-none border-r-0 pr-2 rounded-l-none border-l-0 pl-2 text-sm font-normal leading-normal @[480px]:text-base @[480px]:font-normal @[480px]:leading-normal"
                                 />
                                 <div class="flex items-center justify-center rounded-r-xl border-l-0 border border-[#dce0e5] bg-white pr-[7px]">
                                     <button
                                             class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-[#5ea5ed] text-[#111418] text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base @[480px]:font-bold @[480px]:leading-normal @[480px]:tracking-[0.015em]"
-                                            id="searchButton"
+                                            data-action="click->recipe#search"
+                                            data-recipe-target="searchButton"
                                     >
                                         <span class="truncate">Search</span>
                                     </button>
@@ -47,144 +48,25 @@
                     </div>
                 </div>
             </div>
-            <div id="recipe-main" class="hidden flex flex-col">
-                <h2 class="text-[#111418] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5" id="recipe-title"></h2>
+            <div data-recipe-target="recipeMain" class="hidden flex flex-col">
+                <h2 class="text-[#111418] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5" data-recipe-target="recipeTitle"></h2>
 
                 <h3 class="text-[#111418] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Description:</h3>
-                <div id="recipe-desc"></div>
+                <div data-recipe-target="recipeDesc"></div>
 
                 <h3 class="text-[#111418] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Ingredients: </h3>
-                <div id="recipe-ingredients"></div>
+                <div data-recipe-target="recipeIngredients"></div>
 
                 <h3 class="text-[#111418] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Préparations: </h3>
-                <div id="recipe-steps"></div>
+                <div data-recipe-target="recipeSteps"></div>
             </div>
-            <div id="recipe-loader" class="w-full hidden items-center justify-center">
-                <img src="https://loading.io/assets/mod/spinner/spinner/lg.gif"  alt="loader">
+            <div data-recipe-target="recipeLoader" class="w-full hidden items-center justify-center">
+                <img src="https://loading.io/assets/mod/spinner/spinner/lg.gif" alt="loader">
             </div>
         </div>
     </div>
 {% endblock %}
 
 {% block javascripts %}
-    <script>
-        function formatIngredients(ingredients) {
-            let ul = document.createElement("ul");
-            ingredients.forEach(i => {
-                let li = document.createElement("li");
-                if(i.name === "Sel" || i.name === "Poivre"){
-                    li.textContent = `${i.name}`;
-                }else{
-                    li.textContent = `${i.quantity} ${i.unit} ${i.name}`;
-                }
-                ul.appendChild(li);
-            });
-            return ul;
-        }
-        function formatSteps(steps) {
-            let ul = document.createElement("ul");
-            steps.forEach(i => {
-                let li = document.createElement("li");
-                li.textContent = i;
-                ul.appendChild(li);
-            });
-            return ul;
-        }
-
-        function saveRecipe(data){
-            let dataToSend = {
-                title: data.title,
-                ingredients: data.ingredients,
-                duration: Math.random() * 100,
-            }
-
-            fetch("/createRecipe", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(dataToSend)
-            })
-                .then(data => {})
-            .catch(error => {
-                console.error("Error:", error);
-            });
-        }
-
-        async function getIngredientsList() {
-            try {
-                const response = await fetch("/ingredients", {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
-                });
-                let ingredientList = []
-                for (const ingredient of await response.json()) {
-                    ingredientList.push({value: ingredient, text: ingredient})
-                }
-                return ingredientList;
-            } catch (error) {
-                console.error("Error:", error);
-                return [];
-            }
-        }
-
-        document.addEventListener("DOMContentLoaded", async function () {
-            new TomSelect('#ingredientsInput', {
-                options: await getIngredientsList(),
-                plugins: {
-                    remove_button: {
-                        title: "Supprimer l'ingrédient",
-                    }
-                },
-                persist: false,
-                create: true,
-            });
-
-            let mainDiv = document.getElementById("recipe-main");
-            let recipeLoader = document.getElementById("recipe-loader");
-            let title = document.getElementById("recipe-title");
-            let desc = document.getElementById("recipe-desc");
-            let ingredients = document.getElementById("recipe-ingredients");
-            let steps = document.getElementById("recipe-steps");
-
-            document.getElementById("searchButton").addEventListener("click", function () {
-                recipeLoader.classList.remove("hidden")
-                recipeLoader.classList.add("flex")
-                let data = {};
-                let inputContent = document.getElementById("ingredientsInput").value;
-                data["ingredients"] = inputContent.split(",");
-                const dataToSend = JSON.stringify(data)
-
-                fetch("https://cookitupapi.alwaysdata.net/gemini/generate", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: dataToSend
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log(data);
-                        title.innerHTML = data.title;
-                        desc.innerHTML = data.description;
-                        ingredients.innerHTML = formatIngredients(data.ingredients).innerHTML
-                        steps.innerHTML = formatSteps(data.steps).innerHTML
-
-                        recipeLoader.classList.add("hidden")
-                        recipeLoader.classList.remove("flex")
-                        mainDiv.classList.remove("hidden")
-
-                        saveRecipe(data)
-                    })
-                    .catch(error => {
-                        console.error("Error:", error);
-                    });
-
-            });
-        });
-
-
-    </script>
+    <!-- Les scripts Stimulus seront chargés automatiquement -->
 {% endblock %}
