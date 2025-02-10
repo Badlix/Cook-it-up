@@ -27,7 +27,7 @@ final class ProductController extends AbstractController
             $productRepository->persist($product);
             $productRepository->flush();
 
-            return $this->redirectToRoute('success', ['productName' => $product->getName()]);
+            return $this->redirectToRoute('products');
         }
 
         return $this->render('product/new.html.twig', [
