@@ -20,7 +20,9 @@
     <body>
         <div class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden" style='font-family: "Work Sans", "Noto Sans", sans-serif;'>
             <div class="layout-container flex h-full grow flex-col">
-                {% include "components/navbar.html.twig" %}
+                {% if hideNavbar is not defined or hideNavbar != 1 %}
+                    {% include "components/navbar.html.twig" %}
+                {% endif %}
                 {% block body %}{% endblock %}
             </div>
         </div>

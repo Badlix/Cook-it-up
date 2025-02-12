@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Product;
 use App\Entity\Recipe;
 use App\Repository\ProductRepository;
+use App\Repository\RecipeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,15 +16,21 @@ final class RecipeController extends AbstractController
 {
 
     #[Route('/recipe', name: 'app_recipe')]
-    public function index(): Response
+    public function index(RecipeRepository $recipeRepository): Response
     {
+        $lastRecipeGenerated = $recipeRepository->getLastRecipe();
+        $lastRecipeGeneratedNames = array_map(function ($recipe) {
+            return $recipe->getName();
+        }, $lastRecipeGenerated);
+
         return $this->render('recipe/index.html.twig', [
             'controller_name' => 'RecipeController',
+            'generated_recipes' => $lastRecipeGeneratedNames,
         ]);
     }
 
    #[Route('/createRecipe', name: 'app_create_recipe', methods: ['POST'])]
-    public function createRecipe(Request $request, EntityManagerInterface $manager, ProductRepository $productRepository): Response
+    public function createRecipe(Request $request, EntityManagerInterface $manager, ProductRepository $productRepository ): Response
     {
         $data = json_decode($request->getContent(), true);
         $name = $data['title'];
@@ -53,6 +60,11 @@ final class RecipeController extends AbstractController
         $manager->persist($recipe);
         $manager->flush();
 
-        return $this->redirectToRoute('success', ['productName' => $recipe->getName()]);
+        $recipeName = $recipe->getName();
+
+
+        return $this->redirectToRoute('success', [
+            'productName' => $recipeName,
+        ]);
     }
 }
