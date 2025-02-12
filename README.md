@@ -11,6 +11,8 @@ composer install && npm install && npm run build
 
 ```bash
 docker compose up
+```
+```bash
 docker compose exec php php bin/console doctrine:migrations:migrate
 ```
 
