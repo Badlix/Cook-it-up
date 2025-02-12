@@ -4,13 +4,18 @@
 
 Génèrer des recettes grâce à l'IA à partir d'une liste d'ingrédients.
 
-## Mise en place du projet : 
+## Mise en place du projet pour la première fois : 
 ```bash
 composer install && npm install && npm run build
 ```
+
 ```bash
-symfony serve
+docker compose up
+docker compose exec php php bin/console doctrine:migrations:migrate
 ```
+
+Votre site se trouve a l'adresse : http://localhost:8000
+Et vous pouvez visualiser la base de donnée a l'adresse : http://localhost:8082
 
 ## Communication avec l'API :
 

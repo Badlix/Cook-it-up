@@ -1,23 +1,46 @@
+{% set hideNavbar = 1 %}
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Inscription{% endblock %}
 
 {% block body %}
-    {% for flash_error in app.flashes('verify_email_error') %}
-        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-    {% endfor %}
+    <div class="flex items-center justify-center min-h-screen bg-gray-100">
+        <div class="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
+            <h1 class="text-2xl font-semibold text-center text-gray-700 mb-6">Inscription</h1>
 
-    <h1>Register</h1>
+            {% for flash_error in app.flashes('verify_email_error') %}
+                <div class="text-sm text-red-500 mb-4" role="alert">{{ flash_error }}</div>
+            {% endfor %}
 
-    {{ form_errors(registrationForm) }}
+            {{ form_start(registrationForm, {'attr': {'class': 'space-y-4'}}) }}
+            <div>
+                {{ form_label(registrationForm.email, null, {'label_attr': {'class': 'block text-gray-600 font-medium mb-1'}}) }}
+                {{ form_widget(registrationForm.email, {'attr': {'class': 'w-full rounded-md border-gray-300 p-2 focus:ring-blue-500 focus:border-blue-500'}}) }}
+                {{ form_errors(registrationForm.email) }}
+            </div>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+            <div>
+                {{ form_label(registrationForm.plainPassword, 'Mot de passe', {'label_attr': {'class': 'block text-gray-600 font-medium mb-1'}}) }}
+                {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'w-full rounded-md border-gray-300 p-2 focus:ring-blue-500 focus:border-blue-500'}}) }}
+                {{ form_errors(registrationForm.plainPassword) }}
+            </div>
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+            <div>
+                {{ form_widget(registrationForm.agreeTerms) }}
+                {{ form_label(registrationForm.agreeTerms) }}
+                {{ form_errors(registrationForm.agreeTerms) }}
+            </div>
+
+            <div>
+                <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-md font-medium hover:bg-blue-600 focus:ring-2 focus:ring-offset-2 focus:ring-blue-400">
+                    Inscription
+                </button>
+            </div>
+
+            <div class="text-center">
+                <a href="{{ path('app_login') }}" class="text-blue-500 hover:text-blue-600 underline">Déjà inscrit ?</a>
+            </div>
+            {{ form_end(registrationForm) }}
+        </div>
+    </div>
 {% endblock %}
