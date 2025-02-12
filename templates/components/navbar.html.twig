@@ -19,9 +19,11 @@
             <h2 class="text-[#111418] text-lg font-bold leading-tight tracking-[-0.015em]">Cook It Up</h2>
         </div>
         <div class="flex items-center gap-9">
-            <a class="text-[#111418] text-sm font-medium leading-normal" href="/recipe">Générer une recette</a>
-            <a class="text-[#111418] text-sm font-medium leading-normal" href="/product">Ajouter un ingrédient</a>
-            <a class="text-[#111418] text-sm font-medium leading-normal" href="/products">Liste des ingrédients</a>
+            <a class="text-[#111418] text-sm font-medium leading-normal" href="/recipe">{% trans from 'navbar'%}generate.recipe{% endtrans %}</a>
+            <a class="text-[#111418] text-sm font-medium leading-normal" href="/product">{% trans from 'navbar'%}add.ingredient{% endtrans %}</a>
+            <a class="text-[#111418] text-sm font-medium leading-normal" href="/products">{% trans from 'navbar'%}list.ingredient{% endtrans %}</a>
+            <a href="{{ path('change_locale', {'locale': "fr"}) }}">FR</a>
+            <a href="{{ path('change_locale', {'locale': "en"}) }}">EN</a>
         </div>
     </div>
     <div class="flex flex-1 justify-end gap-8">
