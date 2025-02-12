@@ -29,7 +29,7 @@ Pour chaque recette l'api renvoie :
 - la liste des ingrédients ```("ingredients")```
 
 ## Membres du groupe :
-- Alexandre POSSENTI
-- Mathieu LEROUX
-- Tom EVEN
+- [Alexandre POSSENTI](https://github.com/Alex28345/)
+- [Mathieu LEROUX](https://github.com/Badlix)
+- [Tom EVEN](https://github.com/GeniusTom-Dev)
 
