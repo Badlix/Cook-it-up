@@ -63,7 +63,7 @@ final class RecipeController extends AbstractController
         $recipeName = $recipe->getName();
 
 
-        return $this->redirectToRoute('success', [
+        return $this->redirectToRoute('app_recipe', [
             'productName' => $recipeName,
         ]);
     }
