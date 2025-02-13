@@ -2,6 +2,7 @@ generate.recipe: Generate a recipe
 add.ingredient: Add an ingredient
 list.ingredient: Ingredients list
 find.recipes: Find recipes based on ingredients
+recent.recipes: Recent Recipes
 search: Search
 create.ingredient: Add an ingredient
 name: Nom
