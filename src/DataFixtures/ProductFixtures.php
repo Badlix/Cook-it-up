@@ -4,12 +4,20 @@ namespace App\DataFixtures;
 
 use App\Entity\Product;
 use App\Entity\Recipe;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class ProductFixtures extends Fixture implements FixtureGroupInterface
 {
+    private $userPasswordHasherInterface;
+
+    public function __construct (UserPasswordHasherInterface $userPasswordHasherInterface)
+    {
+        $this->userPasswordHasherInterface = $userPasswordHasherInterface;
+    }
 
     // symfony console doctrine:fixtures:load --group=resetData
     public function load(ObjectManager $manager): void
@@ -72,6 +80,17 @@ class ProductFixtures extends Fixture implements FixtureGroupInterface
             $manager->persist($recipe);
         }
 
+        // USER
+        $user = new User();
+        $user->setEmail("test@gmail.com");
+        $user->setPassword(
+            $this->userPasswordHasherInterface->hashPassword(
+                $user, "test1234"
+            )
+        );
+        $manager->persist($user);
+
+        // PUT IN DB
         $manager->flush();
     }
 
