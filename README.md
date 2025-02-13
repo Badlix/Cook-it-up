@@ -8,15 +8,17 @@ Génèrer des recettes grâce à l'IA à partir d'une liste d'ingrédients.
 ```bash
 composer update && npm install && npm run build
 ```
-
 ```bash
 docker compose up
 ```
 ```bash
 docker compose exec php php bin/console doctrine:migrations:migrate
 ```
+```bash
+docker compose exec php php bin/console doctrine:fixtures:load
+```
 
-Votre site se trouve a l'adresse : http://localhost:8000
+Votre site se trouve a l'adresse : http://localhost:8001
 Et vous pouvez visualiser la base de donnée a l'adresse : http://localhost:8082
 
 ## Communication avec l'API :
