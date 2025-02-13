@@ -6,7 +6,7 @@ Génèrer des recettes grâce à l'IA à partir d'une liste d'ingrédients.
 
 ## Mise en place du projet pour la première fois : 
 ```bash
-composer install && npm install && npm run build
+composer update && npm install && npm run build
 ```
 
 ```bash

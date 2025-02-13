@@ -19,9 +19,9 @@ class Recipe
     private ?string $Name = null;
 
     /**
-     * @var Collection<int, product>
+     * @var Collection<int, Product>
      */
-    #[ORM\ManyToMany(targetEntity: product::class)]
+    #[ORM\ManyToMany(targetEntity: Product::class)]
     private Collection $ingredients;
 
     #[ORM\Column]
