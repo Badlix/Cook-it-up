@@ -11,7 +11,7 @@ services:
   nginx:
     build: ./docker/nginx
     ports:
-      - "8000:80"
+      - "8001:80"
     volumes:
       - ./public:/var/www/public:delegated
     depends_on:
