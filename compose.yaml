@@ -1,6 +1,5 @@
 services:
   php:
-    user: '${USER_ID}:${GROUP_ID}'
     build: ./docker/php
     volumes:
       - .:/var/www:delegated
